@@ -7,10 +7,10 @@ function findTriplet(sum, data) {
   for (const entry of data) {
     const remaining = sum - entry;
     const pair = findPair(remaining, data);
-    if (pair) return [...pair, entry]
+    if (pair) return [...pair, entry];
   }
 }
 
-const result = findTriplet(2020, data).reduce((a, b) => a * b,);
+const result = findTriplet(2020, data).reduce((a, b) => a * b);
 
 console.log(result);
