@@ -10,7 +10,7 @@ export function traceTrajectory(right: number, down: number, data: string[]) {
   while (y < data.length) {
     const entry = data[y];
     if (x >= entry.length) x = x - entry.length;
-    if (entry.charAt(x) === "#") trees++;
+    if (entry[x] === "#") trees++;
     x += right;
     y += down;
   }
