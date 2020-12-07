@@ -2,19 +2,16 @@ import { readInputToString } from "../helpers.ts";
 
 const data = readInputToString();
 
-export interface Bag {
-  count: number;
-  color: string;
-}
+export type Bag = [number, string];
 
-function getInnerColors(rest: string): Bag[] | [] {
+function getInnerColors(rest: string) {
   return rest === "no other bags" ? [] : rest.split(", ").map((others) => {
     const [, count, color] = others.match(/(\d+) (\w+ \w+) bags?/) || [];
-    return { count: Number(count), color };
+    return [Number(count), color];
   });
 }
 
-export function mapRules(data: string[]): Map<string, Bag[]> {
+export function mapRules(data: string[]) {
   return data.reduce((rules, row) => {
     const [, color, rest] = row.match(/(\w+ \w+) bags contain (.*)\./) || [];
     rules.set(color, []);
@@ -28,7 +25,7 @@ export function mapRules(data: string[]): Map<string, Bag[]> {
 
 function traverse(rules: Map<string, Bag[]>, bag: string[]) {
   const entry = rules.get(bag[0]) || [];
-  const colors = entry.reduce((acc, { color }) => {
+  const colors = entry.reduce((acc, [, color]) => {
     acc.push(...traverse(rules, [color]));
     return acc;
   }, [...bag]);
